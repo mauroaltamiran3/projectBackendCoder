@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/">Inicio</a>
+        <a class="navbar-brand" href="/realtimeproducts">Productos en Tiempo Real</a>
+    </div>
+</nav>
+
+<h1 class="text-center my-4">Productos en tiempo real</h1>
+<div id="content" class="row"></div>
+
+<div class="container my-4">
+    <form id="producto-form" class="row g-3">
+        <div class="col-md-6">
+            <input type="text" id="title" class="form-control" placeholder="Nombre" required>
+        </div>
+        <div class="col-md-6">
+            <input type="text" id="description" class="form-control" placeholder="Descripción" required>
+        </div>
+        <div class="col-md-6">
+            <input type="text" id="code" class="form-control" placeholder="Código" required>
+        </div>
+        <div class="col-md-6">
+            <input type="number" id="price" class="form-control" placeholder="Precio" required>
+        </div>
+        <div class="col-md-6">
+            <input type="text" id="category" class="form-control" placeholder="Categoría" required>
+        </div>
+        <div class="col-md-6">
+            <input type="text" id="image" class="form-control" placeholder="URL de la imagen" required>
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary">Agregar Producto</button>
+        </div>
+    </form>
+</div>
+
+<div class="container text-center my-4">
+    <select id="producto_id" class="form-select d-inline-block w-auto"></select>
+    <button onclick="eliminarProducto()" class="btn btn-danger">Eliminar</button>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
