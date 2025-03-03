@@ -5,7 +5,7 @@ const productsRouter = Router();
 
 productsRouter.get('/', async (req, res) => {
     try {
-        const { limit = 10, page = 1, sort, query } = req.query;
+        const { limit = 5, page = 1, sort, query } = req.query;
         const limitNumber = parseInt(limit, 10);
         const pageNumber = parseInt(page, 10);
         const filter = query ? { category: query } : {};

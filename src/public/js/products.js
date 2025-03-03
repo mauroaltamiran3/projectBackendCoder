@@ -26,6 +26,7 @@ function renderProducts(products) {
                     <p class="card-text">Descripción: ${item.description}</p>
                     <p class="card-text">Categoría: ${item.category}</p>
                     <p class="card-text text-primary">Precio: $${item.price}</p>
+                    <button onclick="addToCart('${item._id}')" class="btn btn-primary">Agregar al carrito</button>
                 </div>
             </div>
         </div>`;
@@ -86,3 +87,58 @@ document.getElementById("sortPrice").addEventListener("change", (e) => {
             updatePagination(data);
         });
 });
+
+async function addToCart(productId) {
+    const cartId = localStorage.getItem('cartId'); // Obtener el cartId desde localStorage
+    if (!cartId) {
+        alert('No se pudo obtener el carrito. Por favor, recarga la página.');
+        return;
+    }
+
+    const quantity = 1; // Cantidad por defecto
+
+    try {
+        const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ quantity }),
+        });
+
+        const result = await response.json();
+        alert('Producto agregado al carrito');
+        console.log(result);
+    } catch (error) {
+        console.error('Error al agregar el producto al carrito:', error);
+        alert('Hubo un error al agregar el producto al carrito');
+    }
+}
+
+let cartId = localStorage.getItem('cartId'); // Obtener el cartId desde localStorage
+
+// Si no hay un cartId, crear un nuevo carrito
+if (!cartId) {
+    async function createCart() {
+        try {
+            const response = await fetch('/api/carts', {
+                method: 'POST',
+            });
+            const result = await response.json();
+            cartId = result.payload._id; // Guardar el cartId
+            localStorage.setItem('cartId', cartId); // Almacenar en localStorage
+        } catch (error) {
+            console.error('Error al crear el carrito:', error);
+        }
+    }
+    createCart();
+}
+
+function goToCart() {
+    const cartId = localStorage.getItem('cartId'); // Obtener el cartId desde localStorage
+    if (cartId) {
+        window.location.href = `/cart/${cartId}`; // Redirigir al carrito del usuario
+    } else {
+        alert('No se pudo obtener el carrito. Por favor, recarga la página.');
+    }
+}

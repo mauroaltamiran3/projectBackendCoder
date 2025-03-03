@@ -6,6 +6,7 @@ import viewsRouter from './routes/views.routes.js';
 import mongoose from 'mongoose';
 import productsRouter from './routes/products.routes.js';
 import ProductManager from './classes/ProductManager.js';
+import cartsRouter from './routes/carts.router.js';
 
 const app = express();
 const port = 8080;
@@ -22,6 +23,17 @@ app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/products', productsRouter);
+app.use('/api/carts', cartsRouter);
+
+const hbs = handlebars.create({
+    helpers: {
+        multiply: (a, b) => a * b, // Multiplicar cantidad por precio
+        calculateTotal: (products) => products.reduce((total, item) => total + (item.quantity * item.product.price), 0) // Calcular el total
+    }
+});
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+app.set('views', `${__dirname}/views`);
 
 
 mongoose.connect("mongodb+srv://tukics:coder@cluster0.8mbf9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
@@ -71,4 +83,6 @@ mongoose.connect("mongodb+srv://tukics:coder@cluster0.8mbf9.mongodb.net/?retryWr
             console.error("Error al eliminar el producto:", error.message);
         }
     });
-});    
+});
+
+
