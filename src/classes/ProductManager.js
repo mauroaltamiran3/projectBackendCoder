@@ -18,7 +18,6 @@ class ProductManager {
 
     async addProduct(product) {
         try {
-            // verificiación para error de code
             const existingProduct = await productsModel.findOne({ code: product.code });
             if (existingProduct) {
                 throw new Error(`El código ${product.code} ya está en uso.`);
@@ -37,7 +36,7 @@ class ProductManager {
 
     async deleteProduct(id) {
         try {
-            console.log("ID recibido para eliminar:", id); // Depuración
+            console.log("ID recibido para eliminar:", id);
             if (!mongoose.Types.ObjectId.isValid(id)) {
                 throw new Error(`El ID ${id} no es válido.`);
             }

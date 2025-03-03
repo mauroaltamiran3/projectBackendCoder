@@ -4,7 +4,6 @@ import CartManager from '../classes/CartManager.js';
 const cartsRouter = Router();
 const CM = new CartManager();
 
-// Obtener todos los carritos
 cartsRouter.get('/', async (req, res) => {
     try {
         const carts = await CM.getCarts();
@@ -14,7 +13,6 @@ cartsRouter.get('/', async (req, res) => {
     }
 });
 
-// Crear un nuevo carrito
 cartsRouter.post('/', async (req, res) => {
     try {
         const newCart = await CM.createCart();
@@ -24,7 +22,6 @@ cartsRouter.post('/', async (req, res) => {
     }
 });
 
-// Obtener un carrito por ID
 cartsRouter.get('/:cid', async (req, res) => {
     try {
         const cartId = req.params.cid;
@@ -35,12 +32,11 @@ cartsRouter.get('/:cid', async (req, res) => {
     }
 });
 
-// Agregar un producto al carrito
 cartsRouter.post('/:cid/product/:pid', async (req, res) => {
     try {
         const cartId = req.params.cid;
         const productId = req.params.pid;
-        const quantity = req.body.quantity || 1; // Cantidad por defecto es 1
+        const quantity = req.body.quantity || 1;
 
         const updatedCart = await CM.addProductToCart(cartId, productId, quantity);
         res.send({ status: 'success', payload: updatedCart });
@@ -49,7 +45,6 @@ cartsRouter.post('/:cid/product/:pid', async (req, res) => {
     }
 });
 
-// Eliminar un producto del carrito
 cartsRouter.delete('/:cid/product/:pid', async (req, res) => {
     try {
         const cartId = req.params.cid;
@@ -62,7 +57,6 @@ cartsRouter.delete('/:cid/product/:pid', async (req, res) => {
     }
 });
 
-// Vaciar el carrito
 cartsRouter.delete('/:cid', async (req, res) => {
     try {
         const cartId = req.params.cid;

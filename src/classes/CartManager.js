@@ -36,7 +36,7 @@ class CartManager {
         return cart;
     }
 
-    async removeProductFromCart(cartId, productId) {
+    async removeFromCart(cartId, productId) {
         const cart = await cartModel.findById(cartId);
         if (!cart) {
             throw new Error('Carrito no encontrado');

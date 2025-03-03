@@ -27,8 +27,8 @@ app.use('/api/carts', cartsRouter);
 
 const hbs = handlebars.create({
     helpers: {
-        multiply: (a, b) => a * b, // Multiplicar cantidad por precio
-        calculateTotal: (products) => products.reduce((total, item) => total + (item.quantity * item.product.price), 0) // Calcular el total
+        multiply: (a, b) => a * b,
+        calculateTotal: (products) => products.reduce((total, item) => total + (item.quantity * item.product.price), 0)
     }
 });
 app.engine('handlebars', hbs.engine);

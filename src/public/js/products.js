@@ -1,20 +1,19 @@
 let currentPage = 1;
-let currentLimit = 3; // Mostrar 3 productos por página
+let currentLimit = 3;
 let currentQuery = '';
 let currentSort = '';
 
-// Función para cargar productos
 async function loadProducts(page = 1, limit = 3, query = '', sort = '') {
     const url = `/api/products?limit=${limit}&page=${page}&query=${query}&sort=${sort}`;
-    console.log("URL de la solicitud:", url); // Depuración
+    console.log("URL de la solicitud:", url);
     const response = await fetch(url);
     const data = await response.json();
-    console.log("Datos recibidos:", data); // Depuración
+    console.log("Datos recibidos:", data);
     return data;
 }
 
 function renderProducts(products) {
-    console.log("Productos a renderizar:", products); // Depuración
+    console.log("Productos a renderizar:", products);
     let contenidoHTML = "";
     products.forEach(item => {
         contenidoHTML += `
@@ -89,13 +88,13 @@ document.getElementById("sortPrice").addEventListener("change", (e) => {
 });
 
 async function addToCart(productId) {
-    const cartId = localStorage.getItem('cartId'); // Obtener el cartId desde localStorage
+    const cartId = localStorage.getItem('cartId');
     if (!cartId) {
         alert('No se pudo obtener el carrito. Por favor, recarga la página.');
         return;
     }
 
-    const quantity = 1; // Cantidad por defecto
+    const quantity = 1;
 
     try {
         const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
@@ -115,9 +114,8 @@ async function addToCart(productId) {
     }
 }
 
-let cartId = localStorage.getItem('cartId'); // Obtener el cartId desde localStorage
+let cartId = localStorage.getItem('cartId');
 
-// Si no hay un cartId, crear un nuevo carrito
 if (!cartId) {
     async function createCart() {
         try {
@@ -125,8 +123,8 @@ if (!cartId) {
                 method: 'POST',
             });
             const result = await response.json();
-            cartId = result.payload._id; // Guardar el cartId
-            localStorage.setItem('cartId', cartId); // Almacenar en localStorage
+            cartId = result.payload._id;
+            localStorage.setItem('cartId', cartId);
         } catch (error) {
             console.error('Error al crear el carrito:', error);
         }
@@ -135,9 +133,9 @@ if (!cartId) {
 }
 
 function goToCart() {
-    const cartId = localStorage.getItem('cartId'); // Obtener el cartId desde localStorage
+    const cartId = localStorage.getItem('cartId');
     if (cartId) {
-        window.location.href = `/cart/${cartId}`; // Redirigir al carrito del usuario
+        window.location.href = `/cart/${cartId}`;
     } else {
         alert('No se pudo obtener el carrito. Por favor, recarga la página.');
     }
