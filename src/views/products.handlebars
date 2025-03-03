@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/">Inicio</a>
+        <a class="navbar-brand" href="/realtimeproducts">Productos en Tiempo Real</a>
+        <a class="navbar-brand" href="/products">Productos Paginados</a>
+    </div>
+</nav>
+
+<h1 class="text-center my-4">Productos Paginados</h1>
+
+<div class="container text-center my-4">
+    <button id="prevPage" class="btn btn-primary">Anterior</button>
+    <span id="currentPage" class="mx-3">Página 1</span>
+    <button id="nextPage" class="btn btn-primary">Siguiente</button>
+</div>
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-6">
+            <select id="filterCategory" class="form-select">
+                <option value="">Todas las categorías</option>
+                <option value="Autos">Autos</option>
+                <option value="Pickups">Pick-ups</option>
+                <option value="Suvs">SUVs</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <select id="sortPrice" class="form-select">
+                <option value="">Sin ordenar</option>
+                <option value="asc">Precio: Menor a mayor</option>
+                <option value="desc">Precio: Mayor a menor</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div id="content" class="row"></div>
+
+<script src="/js/products.js"></script>

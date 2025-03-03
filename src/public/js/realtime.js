@@ -1,26 +1,25 @@
 const socket = io();
 
-socket.on("realTimeProducts", data => {
-    limpiarSelectEliminarProducto();
+socket.on('realTimeProducts', data => {
     let contenidoHTML = "";
-
+    let optionsHTML = "";
     data.forEach(item => {
         contenidoHTML += `
-        <div class="col-md-3">
-            <div class="card text-center border-0 fw-light">
-                <img src="${item.thumbnail}" class="img-fluid" alt="${item.title}">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <img src="${item.image}" class="card-img-top img-thumbnail" style="max-width: 100px; max-height: 100px;" alt="${item.title}">
                 <div class="card-body">
-                    <p class="card-text">${item.title}</p>
-                    <p class="card-text">$${item.price}</p>
+                    <h5 class="card-title">${item.title}</h5>
+                    <p class="card-text">Descripción: ${item.description}</p>
+                    <p class="card-text">Categoría: ${item.category}</p>
+                    <p class="card-text text-primary">Precio: $${item.price}</p>
                 </div>
             </div>
         </div>`;
-
-        agregarItemEliminarProducto();
+        optionsHTML += `<option value="${item._id}">Producto #${item._id} - ${item.title}</option>`;
     });
-
-    contenidoHTML += "</ul>";
     document.getElementById("content").innerHTML = contenidoHTML;
+    document.getElementById("producto_id").innerHTML = optionsHTML;
 });
 
 const agregarProducto = () => {
@@ -30,7 +29,7 @@ const agregarProducto = () => {
     const price = document.getElementById("price").value;
     const category = document.getElementById("category").value;
     const image = document.getElementById("image").value;
-    const producto = {
+    const product = {
         title,
         description,
         code,
@@ -38,7 +37,7 @@ const agregarProducto = () => {
         category,
         image
     };
-    socket.emit("nuevoProducto", producto);
+    socket.emit("nuevoProducto", product);
     title.value = '';
     description.value = '';
     code.value = '';
